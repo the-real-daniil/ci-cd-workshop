@@ -1,0 +1,90 @@
+# =============================================================
+# ИТЕРАЦИЯ 3: Оптимизированный CI
+# -------------------------------------------------------------
+# Ускоряем пайплайн и делаем его production-ready.
+#
+# Новое в этой итерации:
+# - Параллельные jobs: lint и test запускаются одновременно
+# - needs: build ждёт успешного завершения lint и test
+# - upload-artifact: сохраняем dist для использования в CD
+#
+# Эффект: время пайплайна сокращается примерно вдвое,
+# т.к. lint и test больше не ждут друг друга.
+#
+# ⚠️ Этот workflow отключён по умолчанию (workflow_dispatch).
+# Чтобы активировать, замените блок on: на:
+#   on:
+#     push:
+#       branches: [main, develop]
+#     pull_request:
+#       branches: [main, develop]
+# =============================================================
+
+name: CI — 3. Optimized
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # Job 1: Проверка качества кода (lint + type-check)
+  # Запускается параллельно с job'ом test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+
+  # Job 2: Запуск тестов
+  # Запускается параллельно с job'ом lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - run: npm run test
+
+  # Job 3: Сборка
+  # needs: [lint, test] — этот job запустится ТОЛЬКО после того,
+  # как оба предыдущих job'а завершатся успешно.
+  # Если хотя бы один упадёт — build не запустится.
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+
+      # Сохраняем собранный dist как артефакт.
+      # Артефакт — файл или папка, которые один job передаёт другому.
+      # CD пайплайн скачает этот артефакт вместо того, чтобы пересобирать.
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          # Артефакт хранится 1 день (достаточно для деплоя)
+          retention-days: 1
+
+# =============================================================
+# ЗАДАНИЕ:
+# 1. Запусти пайплайн и открой его в GitHub Actions
+# 2. Найди визуальный граф job'ов — видно что lint и test
+#    запускаются одновременно, а build ждёт их завершения
+# 3. Сравни время выполнения: Итерация 2 vs Итерация 3
+# 4. Найди загруженный артефакт dist во вкладке Summary
+# =============================================================

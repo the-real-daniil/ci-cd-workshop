@@ -1,0 +1,62 @@
+# =============================================================
+# CD ИТЕРАЦИЯ 1: Деплой на GitHub Pages
+# -------------------------------------------------------------
+# Самый простой способ задеплоить статическое React-приложение.
+# Не нужен сервер, не нужны секреты — только один токен,
+# который GitHub предоставляет автоматически.
+#
+# Результат: приложение доступно по адресу
+# https://<username>.github.io/<repository-name>/
+#
+# ⚠️ Перед использованием:
+# Включи GitHub Pages в Settings → Pages → Source: GitHub Actions
+#
+# ⚠️ Этот workflow отключён по умолчанию (workflow_dispatch).
+# Чтобы активировать, замените блок on: на:
+#   on:
+#     push:
+#       branches: [main]
+# =============================================================
+
+name: CD — 1. GitHub Pages
+
+on:
+  workflow_dispatch:
+
+# Разрешения нужны экшену для записи в ветку gh-pages.
+# По умолчанию workflow имеет только права на чтение.
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build
+
+      # Деплой на GitHub Pages.
+      # GITHUB_TOKEN — встроенный секрет, создаётся автоматически
+      # для каждого запуска. Не нужно добавлять его вручную.
+      # Экшен создаёт ветку gh-pages и пушит туда содержимое dist/.
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+# =============================================================
+# ЗАДАНИЕ:
+# 1. Включи GitHub Pages: Settings → Pages → Source: GitHub Actions
+# 2. Запушь в main и дождись завершения пайплайна
+# 3. Открой приложение по адресу: https://<username>.github.io/<repo>/
+# 4. Внеси изменение в App.tsx и снова запушь
+# 5. Убедись что обновление появилось автоматически
+# =============================================================
