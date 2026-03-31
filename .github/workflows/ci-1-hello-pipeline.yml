@@ -28,12 +28,12 @@ jobs:
       # Без этого шага у runner нет доступа к нашему коду.
       # actions/checkout@v4 — это готовый экшен из GitHub Marketplace.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Шаг 2: Устанавливаем Node.js нужной версии.
       # cache: 'npm' — кэшируем node_modules между запусками (ускоряет пайплайн).
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: "npm"
