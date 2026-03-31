@@ -26,7 +26,7 @@ jobs:
     steps:
       # Шаг 1: Checkout — клонируем репозиторий на runner.
       # Без этого шага у runner нет доступа к нашему коду.
-      # actions/checkout@v4 — это готовый экшен из GitHub Marketplace.
+      # actions/checkout@v5 — это готовый экшен из GitHub Marketplace.
       - name: Checkout code
         uses: actions/checkout@v5
 

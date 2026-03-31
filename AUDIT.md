@@ -51,8 +51,8 @@ npm run build        # dist/ должен создаться без ошибок
 
 - Валидный YAML (корректные отступы, нет лишних символов)
 - Все `uses:` ссылаются на реально существующие actions с корректными версиями:
-  - `actions/checkout@v4` ✓
-  - `actions/setup-node@v4` ✓
+  - `actions/checkout@v5` ✓
+  - `actions/setup-node@v5` ✓
   - `actions/upload-artifact@v4` ✓
   - `actions/download-artifact@v4` ✓
   - `peaceiris/actions-gh-pages@v4` ✓
