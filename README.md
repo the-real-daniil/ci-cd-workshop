@@ -24,7 +24,7 @@
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/<username>/cicd-workshop.git
+git clone git@github.com:the-real-daniil/ci-cd-workshop.git
 cd cicd-workshop
 
 # Установить зависимости
@@ -38,6 +38,7 @@ npm run dev
 
 ### Команды
 
+
 | Команда                 | Что делает                |
 | ----------------------- | ------------------------- |
 | `npm run dev`           | Запустить dev-сервер      |
@@ -47,6 +48,7 @@ npm run dev
 | `npm run test`          | Запустить тесты           |
 | `npm run test:watch`    | Тесты в watch-режиме      |
 | `npm run test:coverage` | Тесты с отчётом покрытия  |
+
 
 ---
 
@@ -151,9 +153,9 @@ src/
 1. Сгенерировать SSH-ключ: `ssh-keygen -t ed25519 -C "github-actions"`
 2. Добавить публичный ключ на сервер
 3. Добавить секреты в репозиторий:
-   - `SSH_PRIVATE_KEY` — приватный ключ
-   - `SERVER_HOST` — IP сервера
-   - `SERVER_USER` — имя пользователя
+  - `SSH_PRIVATE_KEY` — приватный ключ
+  - `SERVER_HOST` — IP сервера
+  - `SERVER_USER` — имя пользователя
 
 Изучим:
 
@@ -199,6 +201,7 @@ main      → push → CI + Deploy: PRODUCTION (с подтверждением)
 
 ## Структура пайплайнов
 
+
 | Файл                          | Итерация | Новые концепции                       |
 | ----------------------------- | -------- | ------------------------------------- |
 | `ci-1-hello-pipeline.yml`     | CI-1     | workflow, job, step, runner, uses/run |
@@ -208,6 +211,7 @@ main      → push → CI + Deploy: PRODUCTION (с подтверждением)
 | `cd-2-vps-deploy.yml`         | CD-2     | secrets, SSH, process manager         |
 | `cd-3-staging-production.yml` | CD-3     | if, environments, approval            |
 
+
 ---
 
 ## Полезные ссылки
@@ -216,3 +220,4 @@ main      → push → CI + Deploy: PRODUCTION (с подтверждением)
 - [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
 - [Vitest документация](https://vitest.dev/)
 - [PM2 документация](https://pm2.keymetrics.io/)
+
