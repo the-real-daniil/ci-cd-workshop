@@ -46,7 +46,12 @@ jobs:
           cache: "npm"
 
       - run: npm ci
+      # GitHub Pages отдаёт сайт по пути /<repo-name>/.
+      # Без VITE_BASE_PATH Vite генерирует ссылки от корня (/assets/…),
+      # и браузер не находит JS/CSS-файлы → 404.
       - run: npm run build
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
 
       # Загружаем артефакт для GitHub Pages.
       # По умолчанию берёт содержимое из ./dist.
