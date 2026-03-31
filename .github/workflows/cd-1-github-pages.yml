@@ -48,7 +48,7 @@ jobs:
       # для каждого запуска. Не нужно добавлять его вручную.
       # Экшен создаёт ветку gh-pages и пушит туда содержимое dist/.
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist

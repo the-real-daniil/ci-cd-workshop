@@ -55,7 +55,7 @@ npm run build        # dist/ должен создаться без ошибок
   - `actions/setup-node@v5` ✓
   - `actions/upload-artifact@v4` ✓
   - `actions/download-artifact@v4` ✓
-  - `peaceiris/actions-gh-pages@v4` ✓
+  - `peaceiris/actions-gh-pages@v5` ✓
   - `appleboy/ssh-action@v1` ✓
 - Все `${{ secrets.NAME }}` соответствуют секретам, описанным в комментариях и README
 - `needs:` ссылается на job'ы, которые реально существуют в том же файле
