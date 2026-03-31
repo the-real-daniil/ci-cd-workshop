@@ -21,7 +21,8 @@
 name: CD — 1. GitHub Pages
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 # Разрешения нужны экшену для записи в ветку gh-pages.
 # По умолчанию workflow имеет только права на чтение.
