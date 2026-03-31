@@ -24,34 +24,43 @@ on:
   push:
     branches: [main]
 
-# Разрешения нужны экшену для записи в ветку gh-pages.
-# По умолчанию workflow имеет только права на чтение.
+# Разрешения нужны для деплоя через GitHub Pages.
+# pages: write — для публикации, id-token: write — для верификации.
 permissions:
-  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Привязка к environment "github-pages" (создаётся автоматически).
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: "npm"
 
       - run: npm ci
       - run: npm run build
 
-      # Деплой на GitHub Pages.
-      # GITHUB_TOKEN — встроенный секрет, создаётся автоматически
-      # для каждого запуска. Не нужно добавлять его вручную.
-      # Экшен создаёт ветку gh-pages и пушит туда содержимое dist/.
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v5
+      # Загружаем артефакт для GitHub Pages.
+      # По умолчанию берёт содержимое из ./dist.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: ./dist
+
+      # Деплой на GitHub Pages.
+      # Используем официальный экшен от GitHub —
+      # не нужны сторонние зависимости и дополнительные токены.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
 # =============================================================
 # ЗАДАНИЕ:
