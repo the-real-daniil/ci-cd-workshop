@@ -10,7 +10,7 @@ const INITIAL_TODOS: Todo[] = [
   { id: 1, text: "Изучить GitHub Actions", completed: false },
   { id: 2, text: "Создать первый workflow", completed: false },
   { id: 3, text: "Настроить CI пайплайн", completed: false },
-  { id: 4, txt: "Покурить бамбук", completed: false },
+  { id: 4, text: "Покурить бамбук", completed: false },
 ];
 
 export default function App() {
