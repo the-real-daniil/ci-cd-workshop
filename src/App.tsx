@@ -13,6 +13,8 @@ const INITIAL_TODOS: Todo[] = [
   { id: 4, text: "Покурить бамбук", completed: false },
 ];
 
+const a = 1;
+
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS);
   const [filter, setFilter] = useState<FilterType>("all");
