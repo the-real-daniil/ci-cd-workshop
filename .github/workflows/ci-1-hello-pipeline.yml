@@ -12,8 +12,7 @@ name: CI — 1. Hello Pipeline
 
 # Триггер: запускаем пайплайн при каждом пуше в main
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   # Job — единица работы. Может быть несколько jobs в одном workflow.
