@@ -36,7 +36,8 @@
 name: CD — 2. VPS Deploy
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   deploy:
