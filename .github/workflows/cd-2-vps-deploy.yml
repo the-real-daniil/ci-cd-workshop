@@ -66,7 +66,7 @@ jobs:
           # Если одна упадёт — следующие не выполнятся.
           script: |
             # Переходим в папку приложения на сервере
-            cd /ci-cd-workshop
+            cd ./ci-cd-workshop
 
             # Обновляем код из репозитория
             git pull origin main
