@@ -12,6 +12,7 @@ const INITIAL_TODOS: Todo[] = [
   { id: 3, text: "Настроить CI пайплайн", completed: false },
   { id: 4, text: "Покурить бамбук", completed: false },
   { id: 5, text: "Прогуляться", completed: false },
+  { id: 6, text: "Задеплоить приложение", completed: false },
 ];
 
 export default function App() {
